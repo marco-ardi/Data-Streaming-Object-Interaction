@@ -8,11 +8,11 @@ focal_l = 1300
 center_x = 1280/2
 center_y = 720/2
 
-def coord_converter(str):
+def coord_converter(mystr):
     j=0
     converted_str = []
     for i in range(0,11):                  #3 coordinate per occhi + 3*5*2 coordinate per  dita
-        point=[float(str[i+j]), float(str[i+j+1]), float(str[i+j+2])]
+        point=[float(mystr[i+j]), float(mystr[i+j+1]), float(mystr[i+j+2])]
         if(point[0]==-1 or point[1]==-1 or point[2]==-1):
             j+=2
             converted_str.append(-1)
