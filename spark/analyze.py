@@ -448,7 +448,7 @@ df_kafka = df_kafka \
 #outputting list of classes to elastic searc
 df_kafka \
     .writeStream \
-    .option("checkpointLocation", "/tmp/checkpoints") \
+    .option("checkpointLocation", "/temp/tmp/checkpoints") \
     .format("es") \
     .start(elastic_index) \
     .awaitTermination()
