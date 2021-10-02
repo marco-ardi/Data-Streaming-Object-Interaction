@@ -99,14 +99,14 @@ def apply_detectron_row(kafka_row):
 
     labels = []
 
-    id = str(kafka_row[0])
+    myid = str(kafka_row[0])
     print(kafka_row[0])
-    print("id =" + id)
+    print("id =" + myid)
 
-    if(not os.path.isfile("/usr/share/logstash/csv/" + id + ".jpg")):#check if photos exists, if not return 0
-        return list([id] + [0 for x in range(len(df_labels)-1)])     #cause otherwise it will crash
+    if(not os.path.isfile("/usr/share/logstash/csv/" + myid + ".jpg")):#check if photos exists, if not return 0
+        return list([myid] + [0 for x in range(len(df_labels)-1)])     #cause otherwise it will crash
 
-    tmp_img = load_img("/usr/share/logstash/csv/" + id + ".jpg")
+    tmp_img = load_img("/usr/share/logstash/csv/" + myid + ".jpg")
     print(tmp_img.shape)
     tmp_outputs = predict(tmp_img)
 
@@ -118,9 +118,9 @@ def apply_detectron_row(kafka_row):
 
     labels = list(set(labels))
     labels.sort()
-    labels.insert(0, id)
+    labels.insert(0, myid)
     row_to_append = []
-    row_to_append.append(id)
+    row_to_append.append(myid)
     for w in range(1, len(df_labels)):
         row_to_append.append(0)
 
@@ -144,14 +144,14 @@ def apply_detectron_row_modified(kafka_row):
     labels = []
 
     # load img
-    id = str(kafka_row[0])
+    myid = str(kafka_row[0])
     print(kafka_row[0])
-    print("id =" + id)
+    print("id =" + myid)
 
-    if(not os.path.isfile("/usr/share/logstash/csv/" + id + ".jpg")):#check if photos exists, if not return 0
+    if(not os.path.isfile("/usr/share/logstash/csv/" + myid + ".jpg")):#check if photos exists, if not return 0
         #return list([id] + [0 for x in range(len(df_labels)-1)])     #cause otherwise it will crash
-        return {"id":id, "classes":""}
-    tmp_img = load_img("/usr/share/logstash/csv/" + id + ".jpg")
+        return {"id":myid, "classes":""}
+    tmp_img = load_img("/usr/share/logstash/csv/" + myid + ".jpg")
     print(tmp_img.shape)
     tmp_outputs = predict(tmp_img)
 
@@ -166,7 +166,7 @@ def apply_detectron_row_modified(kafka_row):
     df_labels = set(df_labels)
     row_to_append = labels & df_labels
     result = {
-        "id":id,
+        "id":myid,
         "classes": list(row_to_append)
     }
 
