@@ -1,20 +1,20 @@
 version: "2.1"
 
-services: 
-    logstash: 
+services:
+    logstash:
         build:
             context: logstash
             dockerfile: Dockerfile
         container_name: logstash
-        volumes: 
-            - ./logstash/csv:/usr/share/logstash/csv    
+        volumes:
+            - ./logstash/csv:/usr/share/logstash/csv
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
         container_name: elasticsearch
         expose:
             - 9200
             - 9300
-        environment: 
+        environment:
             - discovery.type=single-node
             - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
     kibana:
@@ -24,25 +24,25 @@ services:
         container_name: kibana
         ports:
             - 5601:5601
-        depends_on: 
-            - elasticsearch  
+        depends_on:
+            - elasticsearch
     zookeeper:
         build:
             context: kafka
             dockerfile: Dockerfile
         container_name: zookeeper
-        command: [ "zookeeper-server-start.sh", "config/zookeeper.properties" ] 
-        expose: 
+        command: [ "zookeeper-server-start.sh", "config/zookeeper.properties" ]
+        expose:
             - 2181
     kafkaserver:
         build:
             context: kafka
             dockerfile: Dockerfile
         container_name: kafkaserver
-        depends_on: 
+        depends_on:
             - zookeeper
-        command: [ "kafka-server-start.sh", "config/server.properties" ] 
-        expose: 
+        command: [ "kafka-server-start.sh", "config/server.properties" ]
+        expose:
             - 9092
     kafkaui:
         image: provectuslabs/kafka-ui:latest
@@ -51,12 +51,12 @@ services:
             - KAFKA_CLUSTERS_0_NAME=my_cluster
             - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
             - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafkaserver:9092
-        ports: 
+        ports:
             - 8080:8080
         depends_on:
             - kafkaserver
     spark:
-        build: 
+        build:
             context: spark
             dockerfile: Dockerfile
         ports:
@@ -71,10 +71,9 @@ services:
                     devices:
                         - capabilities:
                             - gpu
-        depends_on: 
+        depends_on:
             - kafkaserver
-        volumes: 
-            - ./logstash/csv:/usr/share/logstash/csv    
-    
+        volumes:
+            - ./logstash/csv:/usr/share/logstash/csv
 volumes:
     csv:
