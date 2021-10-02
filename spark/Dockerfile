@@ -1,7 +1,7 @@
 FROM nvidia/cuda:11.1.1-cudnn8-devel
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-reccomends \
 	python3-opencv ca-certificates python3-dev git wget sudo ninja-build openjdk-8-jre
 RUN ln -sv /usr/bin/python3 /usr/bin/python
 
@@ -13,7 +13,7 @@ USER appuser
 WORKDIR /home/appuser
 
 ENV PATH="/home/appuser/.local/bin:${PATH}"
-RUN wget https://bootstrap.pypa.io/get-pip.py && \
+RUN wget -nv https://bootstrap.pypa.io/get-pip.py && \
 	python3 get-pip.py --user && \
 	rm get-pip.py
 
