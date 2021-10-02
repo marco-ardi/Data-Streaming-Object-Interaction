@@ -21,7 +21,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 stringdata = data.decode('utf-8')
 
                 print("String: ", stringdata)
-                if not data: continue  
+                if not data: 
+                    continue  
 
                 received_data = []
                 received_data = stringdata.split(' ')
@@ -31,7 +32,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 wr.writerow(received_data)
 
                 img = conn.recv(160000) #worst case scenario for a 1280x720 jpeg image is 160000 bytes
-                if not img: continue         #it is 2764800 bytes for a 1280x720 png image
+                if not img: 
+                    continue         #it is 2764800 bytes for a 1280x720 png image
                 try:
                     print("Ho ricevuto l'immagine")
                     file_bytes = np.asarray(bytearray(io.BytesIO(img).read()), dtype=np.uint8)
@@ -45,4 +47,3 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     #    break
                 except Exception as e:
                     print("errore:", e)
-                    True
