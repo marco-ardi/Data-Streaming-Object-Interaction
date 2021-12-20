@@ -1,6 +1,10 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/marco-ardi/data-streaming-object-interaction/badge)](https://www.codefactor.io/repository/github/marco-ardi/data-streaming-object-interaction)
 # Data Streaming Object Interaction
 
+# Important Note
+This project has been improved and embedded in my Bachelor's Degree Project, [Hololens Object Interaction](https://github.com/marco-ardi/Hololens-Object-Interaction).
+Check it out for a stronger and much more detailed solution!
+
 ## Overview
 Project for my "Technologies for Advaced Programming" @ University of Catania.
 
